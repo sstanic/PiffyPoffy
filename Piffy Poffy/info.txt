@@ -1,0 +1,22 @@
+== Name
+Sascha Stanic
+
+
+== Email
+udacity@stanic.eu
+
+
+== Resources
+How to change a button image in swift
+http://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift
+
+How to change the audio output
+https://gist.github.com/genedelisa/d4aa45840af9e22245b9
+http://forums.udacity.com/questions/100270726/volume-on-real-device/100290426
+
+Resolving Auto Layout Issues
+https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/ResolvingIssues/ResolvingIssues.html
+
+
+== Statement
+I hereby confirm that this submission is my work. I have cited above the origins of any parts of the submission that were taken from Websites, books, forums, blog posts, GitHub repositories, etc. By including this in my email, I understand that I will be expected to explain my work in a video call with a Udacity coach before I can receive my verified certificate."
