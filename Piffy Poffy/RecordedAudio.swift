@@ -8,6 +8,10 @@
 
 import Foundation
 
+// This is a data model class.
+// Data:
+// - File path to the audio file (url)
+// - Audio title
 class RecordedAudio: NSObject{
     var filePathUrl: NSURL!
     var title: String!

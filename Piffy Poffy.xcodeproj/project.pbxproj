@@ -16,7 +16,6 @@
 		12AA1E5F1ACA0B6A00E402EB /* info.txt in Resources */ = {isa = PBXBuildFile; fileRef = 12AA1E5E1ACA0B6A00E402EB /* info.txt */; };
 		12B4DE891AC2164600213283 /* RecordedAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B4DE881AC2164600213283 /* RecordedAudio.swift */; };
 		12F727D71ABDB04C0022B96E /* PlaySoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F727D61ABDB04C0022B96E /* PlaySoundsViewController.swift */; };
-		12F727D91ABE2CBF0022B96E /* Celebration.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 12F727D81ABE2CBF0022B96E /* Celebration.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +42,6 @@
 		12AA1E5E1ACA0B6A00E402EB /* info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = info.txt; sourceTree = "<group>"; };
 		12B4DE881AC2164600213283 /* RecordedAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedAudio.swift; sourceTree = "<group>"; };
 		12F727D61ABDB04C0022B96E /* PlaySoundsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySoundsViewController.swift; sourceTree = "<group>"; };
-		12F727D81ABE2CBF0022B96E /* Celebration.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Celebration.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +98,6 @@
 		12955C7D1A9A90D30000A38F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				12F727D81ABE2CBF0022B96E /* Celebration.mp3 */,
 				12955C7E1A9A90D30000A38F /* Info.plist */,
 				12AA1E5E1ACA0B6A00E402EB /* info.txt */,
 			);
@@ -206,7 +203,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				12955C851A9A90D30000A38F /* Main.storyboard in Resources */,
-				12F727D91ABE2CBF0022B96E /* Celebration.mp3 in Resources */,
 				12955C8A1A9A90D30000A38F /* LaunchScreen.xib in Resources */,
 				12955C871A9A90D30000A38F /* Images.xcassets in Resources */,
 				12AA1E5F1ACA0B6A00E402EB /* info.txt in Resources */,
