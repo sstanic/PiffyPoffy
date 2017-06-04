@@ -23,11 +23,10 @@ class PlaySoundsViewController: UIViewController {
         // Initialize audio engine and audio file
         audioEngine = AVAudioEngine()
         do {
-            try audioFile = AVAudioFile(forWriting: receivedAudio.filePathUrl as URL, settings: [:])
+            try audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl as URL)
         } catch {
             print("Could not initialize audio engine")
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,7 +75,7 @@ class PlaySoundsViewController: UIViewController {
         let session = AVAudioSession.sharedInstance()
         // initialize the audio session and set the audio output to default speaker (bottom)
         do {
-            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try session.setCategory(AVAudioSessionCategoryPlayback)
         } catch {
             print("Could not initialize audio session.")
         }
@@ -122,7 +121,7 @@ class PlaySoundsViewController: UIViewController {
         do {
             try audioEngine.start()
         } catch {
-            print("Could not play the audio file")
+            print("Could not start the audio engine")
         }
         
         audioPlayerNode.play()

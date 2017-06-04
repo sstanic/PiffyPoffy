@@ -113,7 +113,6 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         }
         
         // create audio recorder with previously defined file path/name
-        var audioRecorder: AVAudioRecorder
         do {
             try
                 audioRecorder = AVAudioRecorder(url: filePath!, settings: [:]);
