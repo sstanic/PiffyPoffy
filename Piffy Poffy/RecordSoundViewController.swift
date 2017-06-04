@@ -30,7 +30,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
 
     // recording status
     var recordingStatus:Int!
-    var currentTime:NSTimeInterval!
+    var currentTime:TimeInterval!
     let isReady = 0
     let isRecording = 1
     let isPause = 2
@@ -41,7 +41,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         switchToStatusReadyForRecording()
     }
 
@@ -51,18 +51,18 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     // Segue from recording screen to playback screen
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "stopRecording"){
-            let playSoundsVC:PlaySoundsViewController = segue.destinationViewController as PlaySoundsViewController
-            let data = sender as RecordedAudio
+            let playSoundsVC:PlaySoundsViewController = segue.destination as! PlaySoundsViewController
+            let data = sender as! RecordedAudio
             playSoundsVC.receivedAudio = data
         }
     }
 
     // Record audio with the possibility to pause.
-    @IBAction func recordAudio(sender: UIButton) {
+    @IBAction func recordAudio(_ sender: UIButton) {
         if (recordingStatus == isPause){
-            audioRecorder.recordAtTime(currentTime)
+            audioRecorder.record(atTime: currentTime)
             switchToStatusRecording()
         }
         else if (recordingStatus == isRecording) {
@@ -78,45 +78,61 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     // Stop recording
-    @IBAction func stopRecording(sender: UIButton) {
+    @IBAction func stopRecording(_ sender: UIButton) {
         audioRecorder.stop()
-        var audioSession = AVAudioSession.sharedInstance()
-        audioSession.setActive(false, error: nil)
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setActive(false)
+        } catch {
+            print("Could not set inactive")
+        }
     }
     
     // Initialize a new audio file and the audio recorder.
     func initializeNewAudioFile(){
         
         // define directory path
-        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         
         // define file path and file name
-        let currentDateTime = NSDate()
-        let formatter = NSDateFormatter()
+        let currentDateTime = Date()
+        let formatter = DateFormatter()
         formatter.dateFormat = "ddMMyyyy-HHmmss"
-        let recordingName = formatter.stringFromDate(currentDateTime)+".wav"
+        let recordingName = formatter.string(from: currentDateTime)+".wav"
         let pathArray = [dirPath, recordingName]
-        let filePath = NSURL.fileURLWithPathComponents(pathArray)
-        println(filePath)
+        let filePath = NSURL.fileURL(withPathComponents: pathArray)
+        print(filePath as Any)
         
         // create audio session
-        var session = AVAudioSession.sharedInstance()
-        session.setCategory(AVAudioSessionCategoryPlayAndRecord, error: nil)
+        let session = AVAudioSession.sharedInstance()
+        
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        } catch {
+            print("Could not set category")
+        }
         
         // create audio recorder with previously defined file path/name
-        audioRecorder = AVAudioRecorder(URL: filePath, settings: nil, error: nil)
-        audioRecorder.delegate = self
-        audioRecorder.meteringEnabled = true
+        var audioRecorder: AVAudioRecorder
+        do {
+            try
+                audioRecorder = AVAudioRecorder(url: filePath!, settings: [:]);
+                audioRecorder.delegate = self;
+                audioRecorder.isMeteringEnabled = true
+            
+        } catch {
+            print("Can not create audio recorder.")
+        }
     }
     
     // Prepare audio data model with recording information and perform segue to playback screen.
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if (flag){
-            recordedAudio = RecordedAudio(filePathUrl: recorder.url, title: recorder.url.lastPathComponent!)
-            performSegueWithIdentifier("stopRecording", sender: recordedAudio)
+            recordedAudio = RecordedAudio(filePathUrl: recorder.url, title: recorder.url.lastPathComponent)
+            performSegue(withIdentifier: "stopRecording", sender: recordedAudio)
         }
         else{
-            println("Recording was not successful")
+            print("Recording was not successful")
             switchToStatusReadyForRecording()
         }
     }
@@ -128,8 +144,8 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     func switchToStatusReadyForRecording(){
         recordingStatus = isReady
         recordingInProgress.text = tapToRecordText
-        stopButton.hidden = true;
-        micButton.setImage(micImage, forState: .Normal)
+        stopButton.isHidden = true;
+        micButton.setImage(micImage, for: UIControlState())
     }
     
     // Recording started.
@@ -139,8 +155,8 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     func switchToStatusRecording(){
         recordingStatus = isRecording
         recordingInProgress.text = recordingText
-        stopButton.hidden = false;
-        micButton.setImage(pauseImage, forState: .Normal)
+        stopButton.isHidden = false;
+        micButton.setImage(pauseImage, for: UIControlState())
     }
     
     // The recording is paused.
@@ -150,7 +166,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     func switchToStatusRecordPausing(){
         recordingStatus = isPause
         recordingInProgress.text = pauseText
-        micButton.setImage(micImage, forState: .Normal)
+        micButton.setImage(micImage, for: UIControlState())
         currentTime = audioRecorder.currentTime
     }
     
